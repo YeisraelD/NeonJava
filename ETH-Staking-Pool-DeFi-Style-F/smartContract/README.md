@@ -26,8 +26,6 @@ $ forge build
 ```shell
 $ forge test
 ```
-<img width="1625" height="283" alt="image" src="https://github.com/user-attachments/assets/5ca35787-4431-43db-aadf-3cb84b386729" />
-
 
 ### Format
 

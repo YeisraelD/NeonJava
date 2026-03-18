@@ -1,23 +1,14 @@
-
-node_modules/
-.DS_Store
-*.log
-*.swp
-.vscode/
-.idea/
-
-# Forge / Foundry
-out/
-build/
-lib/  # Only if using local git submodules, sometimes you want to keep lib
-*.dbg.json
-*.lock
-
-*.t.sol
-*.dbg.json
+# Compiler files
 cache/
-tmp/
+out/
 
-coverage/
+# Ignores development broadcast logs
+!/broadcast
+/broadcast/*/31337/
+/broadcast/**/dry-run/
 
+# Docs
+docs/
+
+# Dotenv file
 .env
