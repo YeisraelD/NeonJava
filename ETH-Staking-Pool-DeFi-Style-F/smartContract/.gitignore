@@ -1,0 +1,23 @@
+
+node_modules/
+.DS_Store
+*.log
+*.swp
+.vscode/
+.idea/
+
+# Forge / Foundry
+out/
+build/
+lib/  # Only if using local git submodules, sometimes you want to keep lib
+*.dbg.json
+*.lock
+
+*.t.sol
+*.dbg.json
+cache/
+tmp/
+
+coverage/
+
+.env
