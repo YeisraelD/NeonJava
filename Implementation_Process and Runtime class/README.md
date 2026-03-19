@@ -44,6 +44,9 @@ here we sow
 * How to check if a process is still running.
 * How to wait for a process to finish and retrieve its exit code.
 
+<img width="1601" height="128" alt="image" src="https://github.com/user-attachments/assets/ad2a2939-d011-4422-93bd-5bd1119e0578" />
+
+
 ### 3.Modern Process Features and Advanced Process Management in Java
 
 ModernProcessFeatures
@@ -71,6 +74,7 @@ Then the program demonstrates how to access all running processes on the system 
 
 * The process ID.
 * Whether the process is alive using isAlive().
+<img width="1280" height="232" alt="image" src="https://github.com/user-attachments/assets/5b784fe2-f19f-4ccb-9f83-f2827d63926f" />
 
 ### 4. AdvancedProcessBuilder
 
@@ -91,4 +95,4 @@ The process is started by calling pb.start(), which returns a Process object.
 The program prints the PID of the started process using process.pid().
 
 It then waits for the external process to finish by calling process.waitFor(). Once the process exits, the exit code is printed.
-
+<img width="1252" height="132" alt="image" src="https://github.com/user-attachments/assets/780ee143-7c34-4001-9692-6179c7ec1429" />
