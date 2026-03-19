@@ -1,13 +1,5 @@
 plugins {
-    id 'java'
     id 'application'
-}
-
-group = 'com.example'
-version = '1.0-SNAPSHOT'
-
-java {
-    sourceCompatibility = '11'
 }
 
 repositories {
@@ -15,13 +7,11 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+    implementation 'org.web3j:core:4.10.3'
+    implementation 'org.slf4j:slf4j-simple:2.0.9'
+    testImplementation 'junit:junit:4.13.2'
 }
 
 application {
-    mainClass = 'com.example.staking.App'
-}
-
-test {
-    useJUnitPlatform()
+    mainClass = 'com.stakingpool.main.StakingApp'
 }
