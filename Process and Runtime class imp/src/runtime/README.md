@@ -13,6 +13,8 @@ After creating these temporary objects, the program checks the free memory again
 It then explicitly requests garbage collection by calling runtime.gc(). This does not guarantee immediate execution but suggests to the JVM that now would be a good time to reclaim unused memory.
 
 Finally, it checks free memory again to see how much memory has been reclaimed after garbage collection.
+<img width="1636" height="250" alt="image" src="https://github.com/user-attachments/assets/e908cba4-7abe-453e-adee-927e18c57946" />
+
 
 This program helps illustrate three important concepts:
 
