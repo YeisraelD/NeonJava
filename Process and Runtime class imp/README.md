@@ -95,4 +95,4 @@ The process is started by calling pb.start(), which returns a Process object.
 The program prints the PID of the started process using process.pid().
 
 It then waits for the external process to finish by calling process.waitFor(). Once the process exits, the exit code is printed.
-
+<img width="1252" height="132" alt="image" src="https://github.com/user-attachments/assets/780ee143-7c34-4001-9692-6179c7ec1429" />
