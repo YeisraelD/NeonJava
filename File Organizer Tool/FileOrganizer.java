@@ -1,4 +1,4 @@
-package fileorganizer;
+
 
 import java.io.File;
 import java.io.IOException;
