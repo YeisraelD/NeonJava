@@ -1,4 +1,4 @@
-# How This Program Actually Works (The Human Version)
+### How This Program Actually Works
 
 So, you've got a messy folder full of random files, and you want them organized. Here’s the breakdown of how this little Java tool handles that
 
