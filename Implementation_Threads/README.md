@@ -51,6 +51,21 @@ There are two primary ways to create a thread in Java:
 - `sleep()` Suspends a thread for a specified period. 
 - `start()`  Starts a thread by calling its `run()` method.
 
+#### test
+```java
+c0f4af876b310958dd8fd440a565c\redhat.java\jdt_ws\NeonJava_c8c7d442\bin MultithreadingDemo "
+My thread is in running state.
+Thread Name: Thread-0
+Thread Priority: 5
+```
+
+```java
+in RunnableDemo "
+Runnable implementation: My thread is in running state.
+Current Thread: Thread-0
+```
+
+
 ### Threading Models
 
 - **Explicit Threading**: Programs created with thousands of threads manually managed by the programmer.
