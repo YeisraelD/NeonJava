@@ -1,4 +1,6 @@
-// /this class demonstrates creating a thread by implementing the Runnable interface.
+package Implementation_Threads;
+ 
+//  this class demonstrates creating a thread by implementing the Runnable interface.
 //  Using Runnable is generally preferred as it allows the class to inherit from 
 //  another class if needed.
 

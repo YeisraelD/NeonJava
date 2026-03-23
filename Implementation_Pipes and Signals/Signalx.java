@@ -1,3 +1,5 @@
+package Implementation_Pipes_and_Signals;
+
 import sun.misc.Signal;
 import sun.misc.SignalHandler;
 
@@ -23,15 +25,16 @@ public class Signalx {
             Signal.handle(new Signal("TERM"), handler);
             System.out.println("Signal handler registered for SIGTERM.");
 
-            //Signal.handle(new Signal("INT"), handler); // Uncomment to catch Ctrl+C explicitly
-            
+            // Signal.handle(new Signal("INT"), handler); // Uncomment to catch Ctrl+C
+            // explicitly
+
         } catch (IllegalArgumentException e) {
             System.err.println("Signal not supported on this platform: " + e.getMessage());
         }
 
         System.out.println("Process ID: " + ProcessHandle.current().pid());
         System.out.println("Waiting for TERM signal... (Kill the process or trigger a signal)");
-        
+
         // Keep running
         while (true) {
             Thread.sleep(1000);

@@ -1,4 +1,4 @@
-package java.com.stakingpool.core;
+package com.stakingpool.core;
 
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;

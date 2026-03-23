@@ -1,6 +1,6 @@
-package com.poker.ui;
+package ui;
 
-import com.poker.core.*;
+import core.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;

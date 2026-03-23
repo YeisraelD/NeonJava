@@ -1,4 +1,4 @@
-package com.poker.core;
+package core;
 
 public enum Suit {
     CLUBS("Clubs", "♣"),
