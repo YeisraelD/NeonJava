@@ -78,9 +78,3 @@ Current Thread: Thread-0
 - **Grand Central Dispatch (GCD)**: An Apple technology for macOS/iOS that uses blocks and dispatch queues (serial and concurrent).
 - **Intel’s Threading Building Blocks (TBB)**: Library for task-based parallelism.
 
-#### Threading Issues
-- Semantics of `fork()` and `exec()` system calls.
-- **Signal Handling**: Synchronous and asynchronous signals.
-- **Thread Cancellation**: Asynchronous or deferred.
-- **Thread-Local Storage (TLS)**: Variables unique to each thread.
-- **Scheduler Activations**: Communication between the kernel and the thread library.
