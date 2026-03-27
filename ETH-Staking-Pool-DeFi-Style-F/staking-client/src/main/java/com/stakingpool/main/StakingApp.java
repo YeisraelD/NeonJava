@@ -13,12 +13,19 @@ public class StakingApp {
 
         try {
             // Get the latest block number
-            System.out.println("Latest block number: " + web3j.ethBlockNumber().send().getBlockNumber());
+            org.web3j.protocol.core.methods.response.EthBlockNumber blockNumberResponse = web3j.ethBlockNumber().send();
+            java.math.BigInteger latestBlockNumber = blockNumberResponse.getBlockNumber();
+            System.out.println("Latest block number: " + latestBlockNumber);
 
             // Example: Get balance of owner account
             String ownerAddress = AccountManager.owner().getAddress();
             System.out.println("Owner address: " + ownerAddress);
-            System.out.println("Owner balance: " + web3j.ethGetBalance(ownerAddress, web3j.ethBlockNumber().send().getBlockNumber()).send().getBalance());
+
+            // Use the fetched block number
+            System.out.println("Owner balance: " + web3j
+                    .ethGetBalance(ownerAddress,
+                            org.web3j.protocol.core.DefaultBlockParameter.valueOf(latestBlockNumber))
+                    .send().getBalance());
 
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());

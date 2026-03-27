@@ -1,0 +1,9 @@
+# Java / Maven / IDE ignore patterns
+/target/
+/.idea/
+/*.iml
+/.settings/
+/.classpath/
+/.project/
+/bin/
+.DS_Store
