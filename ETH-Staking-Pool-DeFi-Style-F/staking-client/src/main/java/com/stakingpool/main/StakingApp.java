@@ -36,7 +36,3 @@ public class StakingApp {
         System.out.println("Staking Pool Client Finished.");
     }
 }
-
-        System.out.println("Staking Pool Client Finished.");
-    }
-}
