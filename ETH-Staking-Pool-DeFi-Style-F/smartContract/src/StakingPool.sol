@@ -4,9 +4,17 @@ pragma solidity ^0.8.0;
 contract StakingPool {
     mapping(address => uint256) public stakes;
     uint256 public totalStaked;
+    bool private locked;
 
     event Staked(address indexed user, uint256 amount);
     event Unstaked(address indexed user, uint256 amount);
+
+    modifier nonReentrant() {
+        require(!locked, "Reentrant call");
+        locked = true;
+        _;
+        locked = false;
+    }
 
     function stake() external payable {
         require(msg.value > 0, "Must stake positive amount");
@@ -15,7 +23,7 @@ contract StakingPool {
         emit Staked(msg.sender, msg.value);
     }
 
-    function unstake(uint256 amount) external {
+    function unstake(uint256 amount) external nonReentrant {
         require(stakes[msg.sender] >= amount, "Insufficient stake");
         stakes[msg.sender] -= amount;
         totalStaked -= amount;

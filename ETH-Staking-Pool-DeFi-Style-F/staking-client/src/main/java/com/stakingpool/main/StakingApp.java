@@ -3,6 +3,9 @@ package com.stakingpool.main;
 import com.stakingpool.core.BlockchainProvider;
 import com.stakingpool.auth.AccountManager;
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.DefaultBlockParameter;
+import org.web3j.protocol.core.methods.response.EthBlockNumber;
+import java.math.BigInteger;
 
 public class StakingApp {
     public static void main(String[] args) {
@@ -13,8 +16,8 @@ public class StakingApp {
 
         try {
             // Get the latest block number
-            org.web3j.protocol.core.methods.response.EthBlockNumber blockNumberResponse = web3j.ethBlockNumber().send();
-            java.math.BigInteger latestBlockNumber = blockNumberResponse.getBlockNumber();
+            EthBlockNumber blockNumberResponse = web3j.ethBlockNumber().send();
+            BigInteger latestBlockNumber = blockNumberResponse.getBlockNumber();
             System.out.println("Latest block number: " + latestBlockNumber);
 
             // Example: Get balance of owner account
@@ -23,13 +26,16 @@ public class StakingApp {
 
             // Use the fetched block number
             System.out.println("Owner balance: " + web3j
-                    .ethGetBalance(ownerAddress,
-                            org.web3j.protocol.core.DefaultBlockParameter.valueOf(latestBlockNumber))
+                    .ethGetBalance(ownerAddress, DefaultBlockParameter.valueOf(latestBlockNumber))
                     .send().getBalance());
 
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
         }
+
+        System.out.println("Staking Pool Client Finished.");
+    }
+}
 
         System.out.println("Staking Pool Client Finished.");
     }
