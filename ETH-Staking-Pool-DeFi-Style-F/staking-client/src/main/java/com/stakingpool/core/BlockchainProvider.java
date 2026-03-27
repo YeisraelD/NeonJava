@@ -4,6 +4,10 @@ import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tx.gas.DefaultGasProvider;
 
+/**
+ * Provides access to the Web3j instance connected to the specified node URL,
+ * and standard Gas Providers to use with transactions.
+ */
 public class BlockchainProvider {
 
     public static Web3j getWeb3j() {
