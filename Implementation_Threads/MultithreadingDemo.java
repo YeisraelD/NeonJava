@@ -1,5 +1,3 @@
-// package Implementation_Threads;
-package Implementation_Threads;
 
 class MultithreadingDemo extends Thread {
     @Override
@@ -11,6 +9,5 @@ class MultithreadingDemo extends Thread {
 
     public static void main(String args[]) {
         MultithreadingDemo obj = new MultithreadingDemo();
-        obj.start(); // this calls the run() method in a separate thread
     }
 }
