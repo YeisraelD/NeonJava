@@ -2,7 +2,7 @@
 
 A tiny, custom relational database engine built in Java.
 
-## Features (Planned)
+#### Features (Planned)
 - SQL Subset Parser (SELECT, INSERT, UPDATE, DELETE)
 - Binary Storage Engine using `RandomAccessFile`
 - Primary Key Indexing
