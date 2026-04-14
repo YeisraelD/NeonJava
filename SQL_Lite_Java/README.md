@@ -14,5 +14,5 @@ A tiny, custom relational database engine built in Java.
 - `src/index`: Indexing structures (B-Tree/Hash)
 - `data/`: Binary database files (.ndb)
 
-### How to Run
+#### How to Run
 ........
