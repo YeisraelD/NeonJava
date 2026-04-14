@@ -1,4 +1,4 @@
-# NeonDB (SQL-Lite-Java)
+### NeonDB (SQL-Lite-Java)
 
 A tiny, custom relational database engine built in Java.
 
