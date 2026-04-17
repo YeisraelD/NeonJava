@@ -9,31 +9,31 @@ public class SimpleEchoClient {
         String host = "127.0.0.1";
         int port = 5000;
 
-        Syetem.out.println("[CLIENT] connecting to: " + host + ": " + port);
-        try(Socket socket = new socket(host, port)){
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true); //send daat to the server
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));//recive data from the server
+        System.out.println("[CLIENT] connecting to: " + host + ": " + port);
+        try (Socket socket = new Socket(host, port)) {
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true); // send daat to the server
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));// recive data from
+                                                                                                   // the server
 
             Scanner scanner = new Scanner(System.in);
             System.out.println("[CLIENT] Connected type a message and exit to quite: ");
 
-            while(true){
+            while (true) {
                 System.out.print("[CLiENT] message: ");
                 String clientMessage = scanner.nextLine();
                 out.println(clientMessage); // send it
-                String response = in.readLine;
+                String response = in.readLine();
 
                 System.out.println("[client] server response: " + response);
 
-                if ("exit".equalsIgnoreCase(clientMessage)){
+                if ("exit".equalsIgnoreCase(clientMessage)) {
                     break;
                 }
             }
-            
-        } catch (IOException e){
+
+        } catch (IOException e) {
             System.err.println("client error: " + e.getMessage());
         }
-
 
     }
 }
