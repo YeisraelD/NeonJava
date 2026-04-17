@@ -5,7 +5,7 @@ import java.net.*;
 import java.util.Scanner;
 
 public class SimpleEchoClient {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         String host = "127.0.0.1";
         int port = 5000;
 
