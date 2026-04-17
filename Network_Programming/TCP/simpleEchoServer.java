@@ -14,6 +14,18 @@ public class SimpleEchoServer {
 
             try (Socket clienSocket = serverSocket.accept()) {
                 System.out.println("[SERVER] client connected! ");
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(clienSocket.getInputStream()));// read the
+                                                                                                            // client
+                                                                                                            // data
+                PrintWriter out = new PrintWriter(clienSocket.getOutputStream(), true); // send data to the client
+
+                String clientMessage;
+                while ((clientMessage = in.readLine()) != null) {
+                    System.out.println("[SERVER] Recived: " + clientMessage);
+
+                    out.println("Echo: " + clientMessage);
+                }
             }
         }
 
