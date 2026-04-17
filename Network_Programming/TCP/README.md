@@ -14,3 +14,6 @@ TCP is a **connection-oriented** protocol. This means that before data can be se
 
 ### Today's Goal:
 Build an **Echo Server**. When the client sends "Hello", the server responds with "Echo: Hello".
+
+<img width="1114" height="166" alt="image" src="https://github.com/user-attachments/assets/af767230-a0ed-4c9a-b771-a8cc6705cb97" />
+
