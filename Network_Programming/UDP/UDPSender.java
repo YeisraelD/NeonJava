@@ -27,7 +27,7 @@ public class UDPSender {
                 // Create the packet with: data, length, destination address, and port
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, port);
 
-                // Send it!
+                // Send it
                 socket.send(packet);
 
                 if ("exit".equalsIgnoreCase(message))
