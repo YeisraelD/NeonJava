@@ -6,13 +6,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.stage.fileChooser;
+import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
 import java.awt.TextArea;
 import java.awt.TextField;
 import java.io.*;
-import java.nio.file.File;
+import java.nio.file.Files;
 import java.nio.file.Files;
 import java.text.Annotation;
 public class serverGUI  extends Application{
@@ -24,14 +24,14 @@ public class serverGUI  extends Application{
 
     public void start(Stage window){
         this.mainStage = window;
-        window.setText("ChatApp [HOT]");
+        window.setTitle("ChatApp [HOT]");
 
         chatArea = new TextArea();
         chatArea.setEditable(false);
         chatArea.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
 
         inputField = new TextField();
-        HBox.setHgrow(inputField, Priority, ALWAYS);
+        HBox.setHgrow(inputField, Priority.ALWAYS);
         inputField.setOnAction(e->handleIncomingMessage());
 
         Button sendFileBtn = new Button("Send File");
@@ -80,13 +80,30 @@ public class serverGUI  extends Application{
                 backend.sendMessage(msg);
                 chatArea.appendtext("[You] " + file.getName()+ "\n");
             }catch (IOException e){
-
+                chatArea.appendText("error reading file form the hard driver.\n");
             }
         }
 
     }
     private void handleIncomingMessage(Message msg){
+        if (msg.isFile){
+            chatArea.append("[Host] "+ msg.fileName + "\n");
 
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setInitialFileName(mag.fileName);
+            File saveLocation = fileChooser.showSaveDialog(mainStage);
+
+            if (saveLocation != null ) {
+                try(FileOutputStream fos = new FileOutputStream(saveLocation)){
+                    fos.write(msg.fileBytes);
+                }catch(IOException e) {
+                    chatArea.appendText("error saving the file on hard driver.\n");
+                }
+            }
+
+        } else {
+            chatArea.appendText("[Host] " + msg.text+ "\n");
+        }
     }
     public static void main(String[] args){
         launch(args);
