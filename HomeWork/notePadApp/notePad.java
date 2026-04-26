@@ -13,7 +13,7 @@ public class notePad { //here handle all back logic what i think the app do
             this.content= content;
         }
     }
-    public FileData open(Stage stage){
+    public FileData open(Stage stage) throws IOException{
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(stage);
 
@@ -31,8 +31,9 @@ public class notePad { //here handle all back logic what i think the app do
         } return null;
     }
     public String save(Stage stage, String content, String init_name) throws IOException{
-        FileChooser fileChooser = new FileChooserUI();
-        File file = fileChooser.showOpenDialog(file);
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialFileName(init_name);
+        File file = fileChooser.showOpenDialog(stage);
 
         if(file != null){
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))){
