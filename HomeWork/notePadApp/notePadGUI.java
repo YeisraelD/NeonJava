@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 
-import javax.swing.border.BevelBorder;
+
 public class notePadGUI extends Application {
     //ui components to be accessed across many methods im going to write
     private TabPane tabPane;
@@ -40,12 +40,42 @@ public class notePadGUI extends Application {
         menuBar.getMenus().add(file);
         root.setTop(menuBar);
 
+        HBox statusBar = createStatusBar();
+        root.setBottom(statusBar);
 
+        tabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal)->updateStatusBar());
+        createNewTab("untitled", "");
 
         Scene scene = new Scene( root,800, 600);
         window.setScene(scene);
         window.show();
 
+    }
+    private HBox createStatusBar(){
+        HBox statusBar = new HBox(20);
+        statusBar.setPadding(new Insets(5,15,5,15));
+        statusBar.setStyle("-fx-background-color: #007acc;");
+
+        posLabel = new Label("Ln 1, Col 1");
+        posLabel.setStyle("-fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px;");
+
+        charCountLabel = new Label("0 characters");
+        charCountLabel.setStyle("-fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px;");
+        
+        Label formatLabel = new Label("Plain text");
+        formatLabel.setStyle("-fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px;");
+
+        Label crlfLabel = new Label("Windows (CRLF)");
+        crlfLabel.setStyle("-fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px;");
+
+        Label encodingLabel = new Label("UTF-8");
+        encodingLabel.setStyle("-fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-size: 12px;");
+
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        statusBar.getChildren().addAll(posLabel, charCountLabel,spacer, formatLabel,crlfLabel, encodingLabel);
+        return statusBar;
     }
     private TextArea getCurrentTextArea(){
         Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
@@ -59,10 +89,30 @@ public class notePadGUI extends Application {
 
         textArea.setStyle("-fx-font-family: 'Consolas' , monospace; -fx-font-size: 14px");
 
+        textArea.textProperty().addListener((obs, oldVal, newVal)->updateStatusBar());
+        textArea.caretPositionProperty().addListener((obs, oldVal, newVal)->updateStatusBar());
 
         tab.setContent(textArea);
         tabPane.getTabs().add(tab);
         tabPane.getSelectionModel().select(tab);
+    }
+    private void updateStatusBar(){
+        TextArea textArea = getCurrentTextArea();
+        if(textArea != null){
+            int caretpos = textArea.getCaretPosition();
+            String text = textArea.getText();
+
+            String txtUpTOcaret = text.substring(0, caretpos);
+            String[] lines = txtUpTOcaret.split("\n", -1);
+            int line = lines.length;
+            int col =lines[lines.length -1].length() + 1;
+
+            posLabel.setText(String.format("Ln %d, col %d",txtUpTOcaret, lines));
+            charCountLabel.setText(text.length() + "characters");
+        } else {
+            posLabel.setText("Ln 1, col 1");
+            charCountLabel.setText("0 characters");
+        }
     }
 
     public void handleOpening(Stage stage){
