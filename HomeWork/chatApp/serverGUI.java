@@ -9,12 +9,9 @@ import javafx.stage.Stage;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
-import java.awt.TextArea;
-import java.awt.TextField;
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Files;
-import java.text.Annotation;
+
 public class serverGUI  extends Application{
     private TextArea chatArea;
     private TextField inputField;
@@ -28,11 +25,10 @@ public class serverGUI  extends Application{
 
         chatArea = new TextArea();
         chatArea.setEditable(false);
-        chatArea.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
-
+        chatArea.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;"); 
         inputField = new TextField();
         HBox.setHgrow(inputField, Priority.ALWAYS);
-        inputField.setOnAction(e->handleIncomingMessage());
+        inputField.setOnAction(e->handleSendMessage());
 
         Button sendFileBtn = new Button("Send File");
         sendFileBtn.setOnAction(e->handleSendFile());
@@ -50,10 +46,10 @@ public class serverGUI  extends Application{
 
         // Start the JavaFX timer in the GUI, which tells the controller to poll the network
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e->backend.messagePoll()));// Create a timer that ticks every 100ms
-        timeline.setCycleCount(Annotation.INDEFINITE);
+        timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
 
-        Scene scene = new Scene(roo, 500, 400);
+        Scene scene = new Scene(root, 500, 400);
         window.setScene(scene);
         window.setOnCloseRequest(e->System.exit(0));
         window.show();
@@ -78,7 +74,7 @@ public class serverGUI  extends Application{
 
                 Message msg = new Message(file.getName(), bytes);
                 backend.sendMessage(msg);
-                chatArea.appendtext("[You] " + file.getName()+ "\n");
+                chatArea.appendText("[You] " + file.getName()+ "\n");
             }catch (IOException e){
                 chatArea.appendText("error reading file form the hard driver.\n");
             }
@@ -87,10 +83,10 @@ public class serverGUI  extends Application{
     }
     private void handleIncomingMessage(Message msg){
         if (msg.isFile){
-            chatArea.append("[Host] "+ msg.fileName + "\n");
+            chatArea.appendText("[Client] "+ msg.fileName + "\n");
 
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setInitialFileName(mag.fileName);
+            fileChooser.setInitialFileName(msg.fileName);
             File saveLocation = fileChooser.showSaveDialog(mainStage);
 
             if (saveLocation != null ) {
@@ -102,7 +98,7 @@ public class serverGUI  extends Application{
             }
 
         } else {
-            chatArea.appendText("[Host] " + msg.text+ "\n");
+            chatArea.appendText("[Client] " + msg.text+ "\n");
         }
     }
     public static void main(String[] args){
