@@ -53,7 +53,7 @@ public class Teacher {
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
-            System.out.println("--- Teacher Records ---");
+            System.out.println("--- Teacher ---");
             while (rs.next()) {
                 System.out.println(rs.getInt("id") + " | " +
                         rs.getString("name") + " | " +

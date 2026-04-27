@@ -34,7 +34,7 @@ public class Student{
         }
     }
     public static void addStudent(List<Student> list){
-        String sql= "INSERT INTO student (id, name , dpartment , section, year) VALUES (?,?,?,?,?)" +
+        String sql= "INSERT INTO student (id, name , department , section, year) VALUES (?,?,?,?,?)" +
                 "ON DUPLICATE KEY UPDATE name=VALUES(name), department = VALUES(department), " +
                 "section = VALUES(section) , year = VALUES(year) ";
         try (Connection conn = DBConnection.getConnection();
