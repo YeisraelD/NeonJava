@@ -30,4 +30,33 @@ public class ChatDB {
         }
     }
 
+    public static void saveMessage(String sender, String content) {
+        String query = "INSERT INTO chat_messages (sender, message) VALUES (?, ?)";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, sender);
+            pstmt.setString(2, content);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error saving message: " + e.getMessage());
+        }
+    }
+
+
+    public static java.util.List<String> getMessageHistory() {
+        java.util.List<String> history = new java.util.ArrayList<>();
+        String query = "SELECT sender, message FROM chat_messages ORDER BY timestamp DESC LIMIT 20";
+        try (Connection conn = getConnection(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+            while (rs.next()) {
+                String entry = rs.getString("sender") + ": " + rs.getString("message");
+                history.add(entry);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); //log error
+        }
+        java.util.Collections.reverse(history);
+        return history;
+    }
+
 }
