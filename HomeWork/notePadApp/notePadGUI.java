@@ -6,9 +6,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import java.io.IOException;
-
-
-
 public class notePadGUI extends Application {
     //ui components to be accessed across many methods im going to write
     private TabPane tabPane;
