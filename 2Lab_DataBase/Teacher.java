@@ -13,16 +13,17 @@ public class Teacher{
     }
     public String toString(int id, String name , String department){ return id + " , " + name + " , " + department; }
     public static void createTable(){
-        String sql = "CREATE TABLE IF NOT EXISTS teacher (" +
-                "id INT PRIMERY KEY ," +
-                "name VARCHAR(10), " +
-                "department VARCHAR(100)";
+        String sql = "CREATE TABLE IF NOT EXISTS teachers (" +
+                "id INT PRIMARY KEY, " +
+                "name VARCHAR(100), " +
+                "department VARCHAR(100))";
+
         try(Connection conn = DBConnection.getConnection();
         Statement stmt= conn.createStatement()){
             stmt.execute(sql);
             System.out.println("teacher table ready ...");
         }catch (SQLException e){
-            e.getMessage();
+            System.err.println("Error reading teacher data: " + e.getMessage());
         }
     }
     public static void addTeacher(List<Teacher> list){
@@ -41,7 +42,7 @@ public class Teacher{
         }
     }
     public static void showTeacher(){
-        String sql = "SELECT * FROM teacher";
+        String sql = "SELECT * FROM teachers";
         try (Connection conn = DBConnection.getConnection();
         Statement stmt = conn.createStatement()){
             ResultSet rs = stmt.executeQuery(sql);
@@ -52,7 +53,7 @@ public class Teacher{
                         rs.getString("department"));
             }
         }catch (SQLException e){
-            e.getMessage();
+            System.err.println("Error reading teacher data: " + e.getMessage());
         }
     }
 }
