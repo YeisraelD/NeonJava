@@ -32,9 +32,24 @@ public class Teacher{
         PreparedStatement pstmt = conn.prepareStatement()){
             for(Teacher t : list){
                 pstmt.setInt(1, t.id);
-                pstmt.setStrignn(2, t.name);
+                pstmt.setString(2, t.name);
                 pstmt.setString(3, t.department);
-                pstmt.excuteUpdate(sql);
+                pstmt.executeUpdate(sql);
+            }
+        }catch (SQLException e){
+            e.getMessage();
+        }
+    }
+    public static void showTeacher(){
+        String sql = "SELECT * FROM teacher";
+        try (Connection conn = DBConnection.getConnection();
+        Statement stmt = conn.creatStatement()){
+            ResultSet rs = executeQuery(sql);
+            System.out.println("---teachers info---");
+            while(rs.next()){
+                System.out.println(rs.getInt("id") + " | " +
+                        rs.getString("name")+ " | " +
+                        rs.getString("department"))
             }
         }
     }
