@@ -34,7 +34,7 @@ public class Teacher{
                 pstmt.setInt(1, t.id);
                 pstmt.setString(2, t.name);
                 pstmt.setString(3, t.department);
-                pstmt.executeUpdate(sql);
+                pstmt.executeUpdate();
             }
         }catch (SQLException e){
             e.getMessage();
