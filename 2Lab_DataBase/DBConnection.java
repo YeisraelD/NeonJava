@@ -7,7 +7,7 @@ public class DBConnection {
     private static final String user = "root";
     private static final String password = "";
 
-    public static  Connection getConnectin() throws SQLException {
+    public static  Connection getConnection() throws SQLException {
         Connection conn = null;
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");// load the jdbc driver to the memo

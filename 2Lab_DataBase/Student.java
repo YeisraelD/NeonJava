@@ -1,10 +1,10 @@
 import java.util.*;
-import jsvs.sql.*;
+import java.sql.*;
 
 public class Student {
     public int id;
     public String name ;
-    public Strign department;
+    public String department;
     public String section;
     public int year;
 
@@ -15,10 +15,10 @@ public class Student {
         this.section =section ;
         this.year =year;
     }
-    public Strign toStrign(int id,String name, String depatment, String section , int year){
-        return id+ " " +name + " " +depatment + " " +section+ " " +year;
+    public String toStrign(int id,String name, String depatment, String section , int year){
+        return id+ " " +name + ", " +depatment + ", " +section+ " ," +year;
     }
-    public static createTable(){
+    public static void createTable(){
         String sql = "CREATE TABLE IF NOT EXISTS student (" +
                       "id INT PRIMERY KEY , " +
                       "name VARCHAR(10) , " +
@@ -27,43 +27,43 @@ public class Student {
                 "year INT";
 
         try(Connection conn = DBConnection.getConnection();
-            Stetement stmt = conn.createStatement()){
-            stmt.excute(sql)//nonestatic
-            System.out.println("student table ready ...")
+            Statement stmt = conn.createStatement()){
+            stmt.execute(sql);//nonestatic
+            System.out.println("student table ready ...");
         } catch (SQLException e){
             e.getMessage();
         }
     }
-    public static addStudent(List<Student> list){
-        String sql = "INSERT INTO student (id, name , department , section , year) VALUES (?, ?, ?,?) " +
-                "ON DUPLICATED KEY UPDATE name = VALUE(name), department = VALUE(department), " +
-                "section = VALUE(section), year= VALUE(year)";
+    public static void addStudent(List<Student> list){
+        String sql = "INSERT INTO student (id, name , department , section, year) VALUES (?,?,?,?,?)" +
+                "ON DUPLICATE KEY UPDATE name=VALUES(name), department = VALUES(department), " +
+                "section = VALUES(section) , year = VALUES(year) ";
         try(Connection conn = DBConnection.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement()){
+        PreparedStatement pstmt = conn.prepareStatement(sql)){
             for(Student s : list){
                 pstmt.setInt(1, s.id);
                 pstmt.setString(2, s.name);
                 pstmt.setString(3, s.department);
                 pstmt.setString(4, s.section);
                 pstmt.setInt(5, s.year);
-                pstmt.excuteUpdate();
+                pstmt.executeUpdate();
             }
-        }catch (SQlException e){
+        }catch (SQLException e){
             e.getMessage();
         }
     }
-    public static showStudent(){
+    public static void showStudent(){
         String sql = "SELECT * FROM student";
         try (Connection conn = DBConnection.getConnection();
              Statement stmt = conn.createStatement()){
-            ResultSet rs = executeQuery(sql);
-            Systme.out.println("---student info ---");
+            ResultSet rs = stmt.executeQuery(sql);
+            System.out.println("---student info ---");
 
             while(rs.next()){
                 System.out.println(rs.getInt("id") + " | " +
                         rs.getString("name") + " | " +
-                        rs.getStrign("department") + " | " +
-                        rs.getStrign("section")+ " | " +
+                        rs.getString("department") + " | " +
+                        rs.getString("section")+ " | " +
                         rs.getInt("year"));
             }
 
