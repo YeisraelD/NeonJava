@@ -55,7 +55,7 @@ public class Student {
     public static showStudent(){
         String sql = "SELECT * FROM student";
         try (Connection conn = DBConnection.getConnection();
-             Statement stmt = conn.creatStatement()){
+             Statement stmt = conn.createStatement()){
             ResultSet rs = executeQuery(sql);
             Systme.out.println("---student info ---");
 

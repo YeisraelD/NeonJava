@@ -12,13 +12,13 @@ public class Teacher{
         this.department;
     }
     public String toString(int id, String name , String department){ return id + " , " + name + " , " + department; }
-    public static void creatTable(){
-        String sql = "CREAT TABLE IF NOT EXISTS teacher (" +
+    public static void createTable(){
+        String sql = "CREATE TABLE IF NOT EXISTS teacher (" +
                 "id INT PRIMERY KEY ," +
                 "name VARCHAR(10), " +
                 "department VARCHAR(100)";
         try(Connection conn = DBConnection.getConnection();
-        Statement stmt= conn.creatStatement()){
+        Statement stmt= conn.createStatement()){
             stmt.excute(sql);
             System.out.println("teacher table ready ...");
         }catch (SQLException e){
@@ -43,7 +43,7 @@ public class Teacher{
     public static void showTeacher(){
         String sql = "SELECT * FROM teacher";
         try (Connection conn = DBConnection.getConnection();
-        Statement stmt = conn.creatStatement()){
+        Statement stmt = conn.createStatement()){
             ResultSet rs = executeQuery(sql);
             System.out.println("---teachers info---");
             while(rs.next()){
