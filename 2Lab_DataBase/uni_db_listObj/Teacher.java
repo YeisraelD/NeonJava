@@ -19,7 +19,7 @@ public class Teacher{
                 "department VARCHAR(100))";
 
         try(Connection conn = DBConnection.getConnection();
-        Statement stmt= conn.createStatement()){
+            Statement stmt= conn.createStatement()){
             stmt.execute(sql);
             System.out.println("teacher table ready ...");
         }catch (SQLException e){
@@ -30,7 +30,7 @@ public class Teacher{
         String sql = "INSERT INTO teachers (id, name, department) VALUES (?, ?, ?) " +
                 "ON DUPLICATE KEY UPDATE name=VALUES(name), department=VALUES(department)";
         try(Connection conn = DBConnection.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql)){
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
             for(Teacher t : list){
                 pstmt.setInt(1, t.id);
                 pstmt.setString(2, t.name);
@@ -44,7 +44,7 @@ public class Teacher{
     public static void showTeacher(){
         String sql = "SELECT * FROM teachers";
         try (Connection conn = DBConnection.getConnection();
-        Statement stmt = conn.createStatement()){
+             Statement stmt = conn.createStatement()){
             ResultSet rs = stmt.executeQuery(sql);
             System.out.println("---teachers info---");
             while(rs.next()){

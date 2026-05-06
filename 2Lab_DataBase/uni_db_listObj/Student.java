@@ -15,14 +15,14 @@ public class Student {
         this.section =section ;
         this.year =year;
     }
-    public String toStrign(int id,String name, String depatment, String section , int year){
+    public String toString(int id,String name, String depatment, String section , int year){
         return id+ " " +name + ", " +depatment + ", " +section+ " ," +year;
     }
     public static void createTable(){
         String sql = "CREATE TABLE IF NOT EXISTS student (" +
-                      "id INT PRIMERY KEY , " +
-                      "name VARCHAR(10) , " +
-                      "department VARCHAR(100) ," +
+                "id INT PRIMERY KEY , " +
+                "name VARCHAR(10) , " +
+                "department VARCHAR(100) ," +
                 "section VARCHAR(100) ," +
                 "year INT";
 
@@ -39,7 +39,7 @@ public class Student {
                 "ON DUPLICATE KEY UPDATE name=VALUES(name), department = VALUES(department), " +
                 "section = VALUES(section) , year = VALUES(year) ";
         try(Connection conn = DBConnection.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql)){
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
             for(Student s : list){
                 pstmt.setInt(1, s.id);
                 pstmt.setString(2, s.name);

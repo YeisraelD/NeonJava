@@ -1,8 +1,9 @@
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class main {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Student.createTable();
         Teacher.createTable();
         System.out.println("Teachers and students information ...");
