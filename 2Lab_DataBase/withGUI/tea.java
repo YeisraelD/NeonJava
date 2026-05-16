@@ -1,3 +1,4 @@
+import java.rmi.RemoteException;
 import java.util.*;
 import java.sql.*;
 
@@ -31,7 +32,7 @@ public class tea {
         }
     }
 
-    public static void addTeacher(tea t) {
+    public static void addTeacher(tea t) throws RemoteException {
         String sql = "INSERT INTO teachers (id, name, department) VALUES (?, ?, ?) " +
                 "ON DUPLICATE KEY UPDATE name=VALUES(name), department=VALUES(department)";
         try (Connection conn = db.getConnection();
