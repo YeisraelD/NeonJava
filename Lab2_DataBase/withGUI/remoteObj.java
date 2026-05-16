@@ -43,7 +43,7 @@ public class remoteObj extends UnicastRemoteObject implements remoteInterface {
             e.getMessage();
         }
     }
-    public  String getStudentList() {
+    public  String getStudentList() throws RemoteException {
         String sql = "SELECT * FROM student";
         StringBuilder sb = new StringBuilder();
         try (Connection conn = db.getConnection();
@@ -62,7 +62,7 @@ public class remoteObj extends UnicastRemoteObject implements remoteInterface {
         }
         return sb.toString();
     }
-    public String getTeacherList() {
+    public String getTeacherList() throws RemoteException {
         String sql = "SELECT * FROM teachers";
         StringBuilder sb = new StringBuilder();
         try (Connection conn = db.getConnection();

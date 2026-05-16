@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.rmi.Naming;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,13 +135,21 @@ public class gui extends Application {
     }
 
     private void handleShow() {
-        String list = stu.getStudentList();
-        displayArea.setText(list);
+        try {
+            String list = stub.getStudentList();
+            displayArea.setText(list);
+        } catch (RemoteException e){
+            System.err.println("error: "+ e );
+        }
     }
 
     private void ThandleShow() {
-        String list = tea.getTeacherList();
-        TdisplayArea.setText(list);
+        try {
+            String list = stub.getTeacherList();
+            TdisplayArea.setText(list);
+        } catch (RemoteException e){
+            System.err.println("error: "+e);
+        }
     }
 
     public static void main(String[] args) {
