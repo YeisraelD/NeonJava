@@ -7,10 +7,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.rmi.Naming;
 import java.util.ArrayList;
 import java.util.List;
 
 public class gui extends Application {
+
+    remoteInterface stub;
 
     TextField idField, nameField, deptField, sectField, yearField;
     TextArea displayArea;
@@ -22,17 +26,30 @@ public class gui extends Application {
 
     @Override
     public void start(Stage window) {
+        try {
+            stub = (remoteInterface) Naming.lookup("rmi://localhost/myRemoteObject");
+        } catch (Exception e) {
+            System.err.println("failed to connect to the server");
+        }
         window.setTitle("University Student Manager");
 
-        idField = new TextField(); idField.setPromptText("Enter ID");
-        nameField = new TextField(); nameField.setPromptText("Enter Name");
-        deptField = new TextField(); deptField.setPromptText("Enter Department");
-        sectField = new TextField(); sectField.setPromptText("Enter Section");
-        yearField = new TextField(); yearField.setPromptText("Enter Year");
+        idField = new TextField();
+        idField.setPromptText("Enter ID");
+        nameField = new TextField();
+        nameField.setPromptText("Enter Name");
+        deptField = new TextField();
+        deptField.setPromptText("Enter Department");
+        sectField = new TextField();
+        sectField.setPromptText("Enter Section");
+        yearField = new TextField();
+        yearField.setPromptText("Enter Year");
 
-        TidField = new TextField(); TidField.setPromptText("Enter id");
-        TnameField = new TextField(); TnameField.setPromptText("Enter name");
-        TdeptField = new TextField(); TnameField.setPromptText("Enter department");
+        TidField = new TextField();
+        TidField.setPromptText("Enter id");
+        TnameField = new TextField();
+        TnameField.setPromptText("Enter name");
+        TdeptField = new TextField();
+        TnameField.setPromptText("Enter department");
 
         displayArea = new TextArea();
         displayArea.setEditable(false);
@@ -50,8 +67,8 @@ public class gui extends Application {
 
         addBtn.setOnAction(e -> handleAdd());
         showBtn.setOnAction(e -> handleShow());
-        TaddBtn.setOnAction(e->ThandleAdd());
-        TshowBtn.setOnAction(e->ThandleShow());
+        TaddBtn.setOnAction(e -> ThandleAdd());
+        TshowBtn.setOnAction(e -> ThandleShow());
 
         VBox layout1 = new VBox(10); // 10px spacing
         layout1.setPadding(new Insets(20));
@@ -83,32 +100,41 @@ public class gui extends Application {
             int year = Integer.parseInt(yearField.getText());
 
             stu s = new stu(id, name, dept, sect, year);
-            stu.addStudent(s);
+            stub.addStudent(s);
 
-            idField.clear();nameField.clear();deptField.clear();sectField.clear();yearField.clear();
+            idField.clear();
+            nameField.clear();
+            deptField.clear();
+            sectField.clear();
+            yearField.clear();
             handleShow();
 
         } catch (Exception ex) {
             displayArea.setText("Error: Please enter valid numbers for ID and Year!");
         }
     }
-    private  void ThandleAdd(){
-        try{
+
+    private void ThandleAdd() {
+        try {
             int id = Integer.parseInt(TidField.getText());
             String name = TnameField.getText();
             String dep = TdeptField.getText();
 
-            tea t = new tea(id, name , dep);
+            tea t = new tea(id, name, dep);
             tea.addTeacher(t);
-            TidField.clear();TnameField.clear();TdeptField.clear();
-        }catch (Exception ex) {
+            TidField.clear();
+            TnameField.clear();
+            TdeptField.clear();
+        } catch (Exception ex) {
             TdisplayArea.setText("Error: Please enter valid numbers for ID and Year!");
         }
     }
+
     private void handleShow() {
         String list = stu.getStudentList();
         displayArea.setText(list);
     }
+
     private void ThandleShow() {
         String list = tea.getTeacherList();
         TdisplayArea.setText(list);
