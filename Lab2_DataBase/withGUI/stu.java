@@ -42,23 +42,4 @@ public class stu implements Serializable {
         }
     }
 
-    public static String getStudentList() {
-        String sql = "SELECT * FROM student";
-        StringBuilder sb = new StringBuilder();
-        try (Connection conn = db.getConnection();
-                Statement stmt = conn.createStatement()) {
-            ResultSet rs = stmt.executeQuery(sql);
-
-            while (rs.next()) {
-                sb.append(rs.getInt("id")).append(" | ")
-                        .append(rs.getString("name")).append(" | ")
-                        .append(rs.getString("department")).append(" | ")
-                        .append(rs.getString("section")).append(" | ")
-                        .append(rs.getInt("year")).append("\n");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return sb.toString();
-    }
 }
