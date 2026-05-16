@@ -52,7 +52,7 @@ public class gui extends Application {
         TnameField = new TextField();
         TnameField.setPromptText("Enter name");
         TdeptField = new TextField();
-        TnameField.setPromptText("Enter department");
+        TdeptField.setPromptText("Enter department");
 
         displayArea = new TextArea();
         displayArea.setEditable(false);
@@ -89,7 +89,7 @@ public class gui extends Application {
         layout.setAlignment(Pos.CENTER);
         layout.getChildren().addAll(layout1, layout2);
 
-        Scene scene = new Scene(layout, 400, 600);
+        Scene scene = new Scene(layout, 600, 600);
         window.setScene(scene);
         window.show();
     }
@@ -130,7 +130,7 @@ public class gui extends Application {
             TnameField.clear();
             TdeptField.clear();
         } catch (Exception ex) {
-            TdisplayArea.setText("Error: Please enter valid numbers for ID and Year!");
+            TdisplayArea.setText("Error: Please enter a valid number for ID!");
         }
     }
 

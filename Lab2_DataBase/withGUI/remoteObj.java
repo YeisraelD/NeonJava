@@ -40,7 +40,7 @@ public class remoteObj extends UnicastRemoteObject implements remoteInterface {
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
-            e.getMessage();
+            e.printStackTrace();
         }
     }
     public  String getStudentList() throws RemoteException {
@@ -72,7 +72,7 @@ public class remoteObj extends UnicastRemoteObject implements remoteInterface {
             while (rs.next()) {
                 sb.append(rs.getInt("id")).append(" | ")
                         .append(rs.getString("name")).append(" | ")
-                        .append(rs.getString("department")).append(" | ").append("\n");
+                        .append(rs.getString("department")).append("\n");
             }
         } catch (SQLException e) {
             e.printStackTrace();
