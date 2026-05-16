@@ -1,6 +1,0 @@
-# Foundry / Solidity ignore patterns
-/out/
-/cache/
-/lib/
-.DS_Store
-foundry.lock
