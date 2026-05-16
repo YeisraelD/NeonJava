@@ -7,6 +7,6 @@ public class remoteObj extends UnicastRemoteObject implements remoteInterface {
     }
 
     public String hello(String s) throws RemoteException {
-        return "hello" + s;
+        return "hello " + s;
     }
 }
