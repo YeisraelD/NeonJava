@@ -1,9 +1,10 @@
 package Lab2_DataBase.withGUI;
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.*;
 import java.sql.*;
 
-public class tea {
+public class tea implements Serializable {
     public int id;
     public String name;
     public String department;
@@ -33,21 +34,7 @@ public class tea {
         }
     }
 
-    public static void addTeacher(tea t) throws RemoteException {
-        String sql = "INSERT INTO teachers (id, name, department) VALUES (?, ?, ?) " +
-                "ON DUPLICATE KEY UPDATE name=VALUES(name), department=VALUES(department)";
-        try (Connection conn = db.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-                pstmt.setInt(1, t.id);
-                pstmt.setString(2, t.name);
-                pstmt.setString(3, t.department);
-                pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.getMessage();
-        }
-    }
 
     public static String getTeacherList() {
         String sql = "SELECT * FROM teachers";

@@ -123,7 +123,8 @@ public class gui extends Application {
             String dep = TdeptField.getText();
 
             tea t = new tea(id, name, dep);
-            tea.addTeacher(t);
+            stub.addTeacher(t);
+            ThandleShow();
             TidField.clear();
             TnameField.clear();
             TdeptField.clear();

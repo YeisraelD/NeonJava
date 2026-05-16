@@ -5,5 +5,6 @@ import java.rmi.RemoteException;
 
 public interface remoteInterface extends Remote {
     public void addStudent(stu s)throws RemoteException;
+    public void addTeacher(tea t) throws RemoteException;
 
 }

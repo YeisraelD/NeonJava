@@ -28,4 +28,20 @@ public class remoteObj extends UnicastRemoteObject implements remoteInterface {
         }
     }
 
+    public void addTeacher(tea t) throws RemoteException {
+        String sql = "INSERT INTO teachers (id, name, department) VALUES (?, ?, ?) " +
+                "ON DUPLICATE KEY UPDATE name=VALUES(name), department=VALUES(department)";
+        try (Connection conn = db.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, t.id);
+            pstmt.setString(2, t.name);
+            pstmt.setString(3, t.department);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.getMessage();
+        }
+    }
+
 }
