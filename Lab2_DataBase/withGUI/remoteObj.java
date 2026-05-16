@@ -1,4 +1,5 @@
 package Lab2_DataBase.withGUI;
+
 import java.sql.*;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -6,6 +7,29 @@ import java.rmi.server.UnicastRemoteObject;
 public class remoteObj extends UnicastRemoteObject implements remoteInterface {
     public remoteObj() throws RemoteException {
         super();
+    }
+
+    private void initializeDatabase() {
+        String createStudent = "CREATE TABLE IF NOT EXISTS student (" +
+                "id INT PRIMARY KEY , " +
+                "name VARCHAR(10) , " +
+                "department VARCHAR(100) ," +
+                "section VARCHAR(100) ," +
+                "year INT)";
+
+        String createTeacher = "CREATE TABLE IF NOT EXISTS teachers (" +
+                "id INT PRIMARY KEY, " +
+                "name VARCHAR(100), " +
+                "department VARCHAR(100))";
+
+        try (Connection conn = db.getConnection();
+                Statement stmt = conn.createStatement()) {
+            stmt.execute(createStudent);
+            stmt.execute(createTeacher);
+            System.out.println("database ready ...");
+        } catch (SQLException e) {
+            System.err.println("Error creating table: " + e.getMessage());
+        }
     }
 
     public void addStudent(stu s) throws RemoteException {
@@ -32,7 +56,7 @@ public class remoteObj extends UnicastRemoteObject implements remoteInterface {
         String sql = "INSERT INTO teachers (id, name, department) VALUES (?, ?, ?) " +
                 "ON DUPLICATE KEY UPDATE name=VALUES(name), department=VALUES(department)";
         try (Connection conn = db.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setInt(1, t.id);
             pstmt.setString(2, t.name);
@@ -43,11 +67,12 @@ public class remoteObj extends UnicastRemoteObject implements remoteInterface {
             e.printStackTrace();
         }
     }
-    public  String getStudentList() throws RemoteException {
+
+    public String getStudentList() throws RemoteException {
         String sql = "SELECT * FROM student";
         StringBuilder sb = new StringBuilder();
         try (Connection conn = db.getConnection();
-             Statement stmt = conn.createStatement()) {
+                Statement stmt = conn.createStatement()) {
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
@@ -62,11 +87,12 @@ public class remoteObj extends UnicastRemoteObject implements remoteInterface {
         }
         return sb.toString();
     }
+
     public String getTeacherList() throws RemoteException {
         String sql = "SELECT * FROM teachers";
         StringBuilder sb = new StringBuilder();
         try (Connection conn = db.getConnection();
-             Statement stmt = conn.createStatement()) {
+                Statement stmt = conn.createStatement()) {
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
