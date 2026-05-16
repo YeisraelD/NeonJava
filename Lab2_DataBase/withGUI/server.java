@@ -1,3 +1,4 @@
+package Lab2_DataBase.withGUI;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 

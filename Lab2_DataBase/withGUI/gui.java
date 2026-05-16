@@ -1,3 +1,5 @@
+package Lab2_DataBase.withGUI;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

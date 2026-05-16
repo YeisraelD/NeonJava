@@ -1,3 +1,4 @@
+package Lab2_DataBase.withGUI;
 import java.rmi.RemoteException;
 import java.util.*;
 import java.sql.*;

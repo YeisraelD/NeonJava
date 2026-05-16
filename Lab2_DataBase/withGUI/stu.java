@@ -1,3 +1,4 @@
+package Lab2_DataBase.withGUI;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
