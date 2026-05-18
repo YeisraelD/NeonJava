@@ -5,9 +5,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.rmi.Naming;
@@ -33,6 +31,7 @@ public class gui extends Application {
             stub = (remoteInterface) Naming.lookup("rmi://localhost/myRemoteObject");
         } catch (Exception e) {
             System.err.println("failed to connect to the server");
+            e.printStackTrace();
         }
         window.setTitle("University Student Manager");
 
@@ -62,10 +61,10 @@ public class gui extends Application {
         TdisplayArea.setEditable(false);
         TdisplayArea.setPromptText("teachers list will appear here..");
 
-        addBtn = new Button("Add Student to Database");
+        addBtn = new Button("Add Student");
         showBtn = new Button("Show Student");
 
-        TaddBtn = new Button("Add new Teacher");
+        TaddBtn = new Button("Add Teacher");
         TshowBtn = new Button("Show Teacher");
 
         addBtn.setOnAction(e -> handleAdd());
@@ -76,13 +75,13 @@ public class gui extends Application {
         VBox layout1 = new VBox(10); // 10px spacing
         layout1.setPadding(new Insets(20));
         layout1.getChildren().addAll(
-                new Label("Add New Student:"), idField, nameField, deptField, sectField, yearField,
+                new Label("Student:"), idField, nameField, deptField, sectField, yearField,
                 addBtn, new Separator(),
                 new Label("Current Students:"), showBtn, displayArea);
 
         VBox layout2 = new VBox(10);
         layout2.setPadding(new Insets(20));
-        layout2.getChildren().addAll(new Label("Add new teacher: "), TidField,
+        layout2.getChildren().addAll(new Label("Teacher: "), TidField,
                 TnameField, TdeptField, TaddBtn, new Separator(),
                 new Label("Current teachers: "), TshowBtn, TdisplayArea);
         HBox layout = new HBox(10);
@@ -95,6 +94,10 @@ public class gui extends Application {
     }
 
     private void handleAdd() {
+        if (stub == null) {
+            displayArea.setText("Error: Not connected to the server.");
+            return;
+        }
         try {
             int id = Integer.parseInt(idField.getText());
             String name = nameField.getText();
@@ -118,6 +121,10 @@ public class gui extends Application {
     }
 
     private void ThandleAdd() {
+        if (stub == null) {
+            TdisplayArea.setText("Error: Not connected to the server.");
+            return;
+        }
         try {
             int id = Integer.parseInt(TidField.getText());
             String name = TnameField.getText();
@@ -135,20 +142,28 @@ public class gui extends Application {
     }
 
     private void handleShow() {
+        if (stub == null) {
+            displayArea.setText("Error: Not connected to the server.");
+            return;
+        }
         try {
             String list = stub.getStudentList();
             displayArea.setText(list);
-        } catch (RemoteException e){
-            System.err.println("error: "+ e );
+        } catch (RemoteException e) {
+            System.err.println("error: " + e);
         }
     }
 
     private void ThandleShow() {
+        if (stub == null) {
+            TdisplayArea.setText("Error: Not connected to the server.");
+            return;
+        }
         try {
             String list = stub.getTeacherList();
             TdisplayArea.setText(list);
-        } catch (RemoteException e){
-            System.err.println("error: "+e);
+        } catch (RemoteException e) {
+            System.err.println("error: " + e);
         }
     }
 

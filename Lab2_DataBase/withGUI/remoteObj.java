@@ -7,6 +7,7 @@ import java.rmi.server.UnicastRemoteObject;
 public class remoteObj extends UnicastRemoteObject implements remoteInterface {
     public remoteObj() throws RemoteException {
         super();
+        initializeDatabase();
     }
 
     private void initializeDatabase() {
@@ -61,6 +62,7 @@ public class remoteObj extends UnicastRemoteObject implements remoteInterface {
             pstmt.setInt(1, t.id);
             pstmt.setString(2, t.name);
             pstmt.setString(3, t.department);
+            System.out.println(" teacher added to DB");
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -74,6 +76,7 @@ public class remoteObj extends UnicastRemoteObject implements remoteInterface {
         try (Connection conn = db.getConnection();
                 Statement stmt = conn.createStatement()) {
             ResultSet rs = stmt.executeQuery(sql);
+
 
             while (rs.next()) {
                 sb.append(rs.getInt("id")).append(" | ")
