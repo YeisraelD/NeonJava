@@ -1,6 +1,8 @@
 package Lab2_DataBase.withGUI;
 
 import java.sql.*;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -77,7 +79,6 @@ public class remoteObj extends UnicastRemoteObject implements remoteInterface {
                 Statement stmt = conn.createStatement()) {
             ResultSet rs = stmt.executeQuery(sql);
 
-
             while (rs.next()) {
                 sb.append(rs.getInt("id")).append(" | ")
                         .append(rs.getString("name")).append(" | ")
@@ -107,6 +108,23 @@ public class remoteObj extends UnicastRemoteObject implements remoteInterface {
             e.printStackTrace();
         }
         return sb.toString();
+    }
+
+    private transient List<PrintWriter> clients = new ArrayList<>();
+
+    public void addTCPClient(Socket clientSocket) {
+        try {
+            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+            clients.add(out);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void broadcastNotification(String message) {
+        for (PrintWriter c : clients) {
+            writer.println(message);
+        }
     }
 
 }
