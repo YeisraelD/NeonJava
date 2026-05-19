@@ -10,7 +10,7 @@ import java.util.List;
 
 public class server {
     public static void main(String[] args) {
-        List<PrintWriter> clientList = new ArrayList<>();
+        // List<PrintWriter> clientList = new ArrayList<>();
         try {
 
             Registry registry = LocateRegistry.createRegistry(1099);

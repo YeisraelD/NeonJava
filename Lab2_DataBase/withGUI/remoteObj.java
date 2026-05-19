@@ -48,6 +48,7 @@ public class remoteObj extends UnicastRemoteObject implements remoteInterface {
             pstmt.setString(4, s.section);
             pstmt.setInt(5, s.year);
             pstmt.executeUpdate();
+            broadcastNotification("a new student named " + s.name + "was added");
             System.out.println(" Student added to DB");
 
         } catch (SQLException e) {
@@ -66,6 +67,7 @@ public class remoteObj extends UnicastRemoteObject implements remoteInterface {
             pstmt.setString(3, t.department);
             System.out.println(" teacher added to DB");
             pstmt.executeUpdate();
+            broadcastNotification("a new teacher named " + t.name + "was added");
 
         } catch (SQLException e) {
             e.printStackTrace();
