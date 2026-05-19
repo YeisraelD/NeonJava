@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import java.io.IOException;
+import javafx.scene.input.KeyCombination;
 
 public class notePadGUI extends Application {
     // ui components to be accessed across many methods im going to write
@@ -26,11 +27,21 @@ public class notePadGUI extends Application {
         Menu file = new Menu("File");
 
         MenuItem new_ = new MenuItem("New File");
+        new_.setAccelerator(KeyCombination.keyCombination("Ctrl+N"));
         new_.setOnAction(e -> createNewTab("Untitled", ""));
+
         MenuItem open = new MenuItem("Open...");
+        open.setAccelerator(keyCombination.keyCombination("Ctrl+O"));
         open.setOnAction(e -> handleOpening(window));
-        MenuItem save = new MenuItem("Save as...");
+
+        MenuItem save = new MenuItem("Save");
+        save.setAccelerator(keyCombination.keyCombination("Ctrl+S"));
         save.setOnAction(e -> handleSaving(window));
+
+        MenuItem saveAs = new MenuItem("Save as...");
+        saveAs.setAccelerator(keyCombination.keyCombination("Ctrl+S"));
+        saveAs.setOnAction(e -> handleSaving(window));
+
         MenuItem exit = new MenuItem("Exit");
         exit.setOnAction(e -> Platform.exit());
 
