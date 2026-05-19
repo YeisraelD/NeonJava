@@ -1,3 +1,5 @@
+package HomeWork.NotePad_App;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -5,16 +7,20 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import javafx.scene.input.KeyCombination;
 
-public class notePadGUI extends Application {
+public class NotePadGUI extends Application {
     // ui components to be accessed across many methods im going to write
     private TabPane tabPane;
     private Label posLabel;
     private Label charCountLabel;
 
-    private notePad backend = new notePad();
+    private NotePad backend = new NotePad();
 
     public void start(Stage window) {
         window.setTitle("My Notepad App");
@@ -31,21 +37,21 @@ public class notePadGUI extends Application {
         new_.setOnAction(e -> createNewTab("Untitled", ""));
 
         MenuItem open = new MenuItem("Open...");
-        open.setAccelerator(keyCombination.keyCombination("Ctrl+O"));
+        open.setAccelerator(KeyCombination.keyCombination("Ctrl+O"));
         open.setOnAction(e -> handleOpening(window));
 
         MenuItem save = new MenuItem("Save");
-        save.setAccelerator(keyCombination.keyCombination("Ctrl+S"));
-        save.setOnAction(e -> handleSaving(window));
+        save.setAccelerator(KeyCombination.keyCombination("Ctrl+S"));
+        save.setOnAction(e -> handleNormalSaving(window));
 
         MenuItem saveAs = new MenuItem("Save as...");
-        saveAs.setAccelerator(keyCombination.keyCombination("Ctrl+S"));
+        saveAs.setAccelerator(KeyCombination.keyCombination("Ctrl+Shift+S"));
         saveAs.setOnAction(e -> handleSaving(window));
 
         MenuItem exit = new MenuItem("Exit");
         exit.setOnAction(e -> Platform.exit());
 
-        file.getItems().addAll(new_, open, save, new SeparatorMenuItem(), exit);
+        file.getItems().addAll(new_, open, save, saveAs, new SeparatorMenuItem(), exit);
         menuBar.getMenus().add(file);
         root.setTop(menuBar);
 
@@ -97,7 +103,12 @@ public class notePadGUI extends Application {
     }
 
     private void createNewTab(String title, String content) {
+        createNewTab(title, content, null);
+    }
+
+    private void createNewTab(String title, String content, File file) {
         Tab tab = new Tab(title);
+        tab.setUserData(file); // Store the File reference in the tab
         TextArea textArea = new TextArea(content);
 
         textArea.setStyle("-fx-font-family: 'Consolas' , monospace; -fx-font-size: 14px");
@@ -131,9 +142,9 @@ public class notePadGUI extends Application {
 
     public void handleOpening(Stage stage) {
         try {
-            notePad.FileData data = backend.open(stage);
+            NotePad.FileData data = backend.open(stage);
             if (data != null) {
-                createNewTab(data.name, data.content);
+                createNewTab(data.name, data.content, data.file);
             }
         } catch (IOException e) {
             alert("error opening file: " + e.getMessage());
@@ -145,12 +156,31 @@ public class notePadGUI extends Application {
         TextArea textArea = getCurrentTextArea();
         if (currentTab != null && textArea != null) {
             try {
-                String newname = backend.save(stage, textArea.getText(), currentTab.getText());
-                if (newname != null) {
-                    currentTab.setText(newname);
+                File savedFile = backend.save(stage, textArea.getText(), currentTab.getText());
+                if (savedFile != null) {
+                    currentTab.setText(savedFile.getName());
+                    currentTab.setUserData(savedFile); // Save it to the tab
                 }
             } catch (IOException e) {
                 alert("error saving file: " + e.getMessage());
+            }
+        }
+    }
+
+    public void handleNormalSaving(Stage stage) {
+        Tab currentTab = tabPane.getSelectionModel().getSelectedItem();
+        TextArea textArea = getCurrentTextArea();
+
+        if (currentTab != null && textArea != null) {
+            File savedFile = (File) currentTab.getUserData();
+            if (savedFile != null) {
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(savedFile))) {
+                    writer.write(textArea.getText());
+                } catch (IOException e) {
+                    alert("Error saving file: " + e.getMessage());
+                }
+            } else {
+                handleSaving(stage);
             }
         }
     }

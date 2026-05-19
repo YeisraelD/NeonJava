@@ -1,10 +1,11 @@
+ package HomeWork.NotePad_App;
 import java.io.*;
 import javafx.stage.FileChooser; //took too long to figure this out 
 import javafx.stage.Stage;
 
 import javax.swing.plaf.FileChooserUI;
 
-public class notePad { // here handle all back logic what i think the app do
+public class NotePad { // here handle all back logic what i think the app do
     public static class FileData {// the helper class just to handle 2 string at the same time , name and content
         public String name;
         public String content;
@@ -36,17 +37,16 @@ public class notePad { // here handle all back logic what i think the app do
         return null;
     }
 
-    public String save(Stage stage, String content, String init_name) throws IOException {
+    public File save(Stage stage, String content, String init_name) throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialFileName(init_name);
-        File file = fileChooser.showOpenDialog(stage);
+        File file = fileChooser.showSaveDialog(stage); // Use showSaveDialog for saving!
 
         if (file != null) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                 writer.write(content);
-                return file.getName();
+                return file;
             }
-
         }
         return null;
     }
