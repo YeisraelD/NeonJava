@@ -32,7 +32,7 @@ public class gui extends Application {
     @Override
     public void start(Stage window) {
         Label notificationLabl = new Label("waiting for live notification..");
-        notificationLabl.setStyle("-fx-font-weight: bold; -fx-text-fill: green; -fx-font-size: 14px;");
+        notificationLabl.setStyle("-fx-font-weight: bold; -fx-text-fill: blue; -fx-font-size: 14px;");
         try {
             stub = (remoteInterface) Naming.lookup("rmi://localhost/myRemoteObject");
 
