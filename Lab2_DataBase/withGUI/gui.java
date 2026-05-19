@@ -112,8 +112,11 @@ public class gui extends Application {
         layout.getChildren().addAll(layout1, layout2);
 
         VBox updatedLayout = new VBox();
+        updatedLayout.setAlignment(Pos.CENTER);
+        updatedLayout.setPadding(new Insets(10));
+        updatedLayout.getChildren().addAll(layout, notificationLabl);
 
-        Scene scene = new Scene(layout, 600, 650);
+        Scene scene = new Scene(updatedLayout, 600, 650);
         window.setScene(scene);
         window.show();
     }
