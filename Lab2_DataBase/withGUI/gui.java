@@ -1,6 +1,7 @@
 package Lab2_DataBase.withGUI;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -8,6 +9,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.Socket;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -27,8 +31,27 @@ public class gui extends Application {
 
     @Override
     public void start(Stage window) {
+        Label notificationLabl = new Label("waiting for live notification..");
+        notificationLabl.setStyle("-fx-font-weight: bold; -fx-text-fill: green; -fx-font-size: 14px;");
         try {
             stub = (remoteInterface) Naming.lookup("rmi://localhost/myRemoteObject");
+
+            Socket socket = new Socket("localhost", 8000);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            new Thread(() -> {
+                try {
+                    while (true) {
+                        String msg = in.readLine();
+                        if (msg != null) {
+                            Platform.runLater(() -> notificationLabl.setText(msg));
+                        }
+                    }
+                } catch (Exception e) {
+                    System.err.println("disconnected");
+                }
+            }).start();
+
         } catch (Exception e) {
             System.err.println("failed to connect to the server");
             e.printStackTrace();
@@ -88,7 +111,9 @@ public class gui extends Application {
         layout.setAlignment(Pos.CENTER);
         layout.getChildren().addAll(layout1, layout2);
 
-        Scene scene = new Scene(layout, 600, 600);
+        VBox updatedLayout = new VBox();
+
+        Scene scene = new Scene(layout, 600, 650);
         window.setScene(scene);
         window.show();
     }

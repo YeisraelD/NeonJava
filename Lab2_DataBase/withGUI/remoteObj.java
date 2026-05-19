@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.List;
 
 public class remoteObj extends UnicastRemoteObject implements remoteInterface {
     public remoteObj() throws RemoteException {
@@ -125,7 +127,7 @@ public class remoteObj extends UnicastRemoteObject implements remoteInterface {
 
     private void broadcastNotification(String message) {
         for (PrintWriter c : clients) {
-            writer.println(message);
+            c.println(message);
         }
     }
 
