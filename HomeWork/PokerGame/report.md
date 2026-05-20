@@ -6,16 +6,6 @@ A simple, console-based 2-card poker duel between a human player and a Machine o
 
 Instead of bloated 7-card Texas Hold'em logic, this implementation gets straight to the point: a fast-paced 2-card showdown.
 
-```mermaid
-graph TD
-    Start[Start Game] --> Deck[Generate & Shuffle Deck]
-    Deck --> Deal[Deal 2 Cards to Player & Machine]
-    Deal --> Prompt{Fold or Call?}
-    Prompt -->|Fold| MachineWins[Machine Wins by Default]
-    Prompt -->|Call| Evaluate[Evaluate Hand Scores]
-    Evaluate --> Winner[Compare Scores & Declare Winner]
-```
-
 ---
 
 ## Technical Details

@@ -12,14 +12,6 @@ The project is split into a clean Model-View pattern:
 1. **NotePad.java (The Engine):** Handles raw system File I/O operations (BufferedReader/BufferedWriter) and encapsulates file metadata into a custom FileData carrier class.
 2. **NotePadGUI.java (The Control Deck):** Builds the JavaFX stage, handles layout (BorderPane, TabPane), listens to user caret movements, and translates them to status updates.
 
-```mermaid
-graph TD
-    UI[NotePadGUI - JavaFX] -->|Reads/Writes| Text[TextArea / Tabs]
-    UI -->|Requests File Dialog| Backend[NotePad.java]
-    Backend -->|Returns FileData| UI
-    Backend -->|Reads/Writes to Disk| Disk[(Local Disk)]
-```
-
 ---
 
 ## Core Features Implemented

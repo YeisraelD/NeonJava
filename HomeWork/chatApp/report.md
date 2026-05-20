@@ -9,16 +9,6 @@ The application is decomposed into three distinct layers:
 2. **Network Communications Layer (`chatSocket.java`, `ChatServer.java`, `Message.java`)**: Manages full-duplex socket connections, ClientHandler threads, and packet serialization.
 3. **Data Persistence Layer (`ChatDB.java`)**: Manages MySQL connection pooling, schema initialization, and transactional message logs.
 
-```mermaid
-graph TD
-    Client1[clientGUI 1] <--> |chatSocket| ChatServer[ChatServer.java]
-    Client2[clientGUI 2] <--> |chatSocket| ChatServer
-    ChatServer <--> |ClientHandler Threads| Sockets[Sockets]
-    serverGUI[serverGUI.java] <--> |Direct Control| ChatServer
-    ChatServer <--> |JDBC| ChatDB[ChatDB.java]
-    ChatDB <--> |SQL Queries| MySQL[(MySQL Database)]
-```
-
 ---
 
 ## Technical Implementations & Design Decisions
