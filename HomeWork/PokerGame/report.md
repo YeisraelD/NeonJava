@@ -46,3 +46,14 @@ Since hands consist of only 2 cards:
 - **Three of a Kind**: Code exists (`200 + rank`) for future-proofing, but is impossible with a 2-card hand.
 
 The player with the higher evaluated score wins the round.
+
+---
+
+## Graphical User Interface (`pokerGUI.java`)
+
+To complement the console version, we implemented a custom JavaFX desktop interface featuring:
+- **Green Felt felt background** matching standard real-world casino tables.
+- **Dynamic CSS Cards**: Cards are rendered dynamically as white rectangular panels with rounded corners, top-left rank values, and central unicode suit icons (`♠`, `♥`, `♦`, `♣`) colored dynamically (black/red).
+- **Face-Down Machine Cards**: Opponent cards are shown with geometric red card-backs until the showdown is initialized.
+- **State-driven controls**: Buttons to Call/Fold and Deal are synchronized with the game loop to prevent out-of-order execution.
+
