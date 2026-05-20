@@ -1,7 +1,4 @@
 
-import HomeWork.PokerGame.model.Card;
-import HomeWork.PokerGame.model.PokerLogic;
-
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

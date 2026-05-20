@@ -2,6 +2,8 @@ package HomeWork.chatApp;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -12,7 +14,8 @@ import java.io.*;
 import java.nio.file.Files;
 
 public class serverGUI extends Application {
-    private TextArea chatArea;
+    private VBox messageBox;
+    private ScrollPane scrollPane;
     private TextField inputField;
     private Stage mainStage;
     private ChatServer serverBackend;
@@ -22,10 +25,14 @@ public class serverGUI extends Application {
         this.mainStage = window;
         window.setTitle("ChatApp [Host Server]");
 
-        chatArea = new TextArea();
-        chatArea.setEditable(false);
-        chatArea.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;"); 
-        
+        messageBox = new VBox(4);
+        messageBox.setPadding(new Insets(5));
+        messageBox.setFillWidth(true);
+
+        scrollPane = new ScrollPane(messageBox);
+        scrollPane.setFitToWidth(true);
+        messageBox.heightProperty().addListener((obs, o, n) -> scrollPane.setVvalue(1.0));
+
         inputField = new TextField();
         HBox.setHgrow(inputField, Priority.ALWAYS);
         inputField.setOnAction(e -> handleSendMessage());
@@ -37,16 +44,20 @@ public class serverGUI extends Application {
         btnBar.getChildren().addAll(inputField, sendFileBtn);
 
         BorderPane root = new BorderPane();
-        root.setCenter(chatArea);
+        root.setCenter(scrollPane);
         root.setBottom(btnBar);
 
         // Set up database schema
         ChatDB.setupDatabase();
-        
+
         // Load chat history from the DB
         java.util.List<String> history = ChatDB.getMessageHistory();
         for (String record : history) {
-            chatArea.appendText(record + "\n");
+            if (record.startsWith("[Host]")) {
+                addSentMessage(record);
+            } else {
+                addReceivedMessage(record);
+            }
         }
 
         // Start multithreaded socket server
@@ -62,10 +73,34 @@ public class serverGUI extends Application {
         window.show();
     }
 
+    //sent message — right side
+    private void addSentMessage(String text) {
+        Platform.runLater(() -> {
+            Label label = new Label(text);
+            label.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
+            label.setWrapText(true);
+            HBox row = new HBox(label);
+            row.setAlignment(Pos.CENTER_RIGHT);
+            messageBox.getChildren().add(row);
+        });
+    }
+
+    //Incoming message — left side
+    private void addReceivedMessage(String text) {
+        Platform.runLater(() -> {
+            Label label = new Label(text);
+            label.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
+            label.setWrapText(true);
+            HBox row = new HBox(label);
+            row.setAlignment(Pos.CENTER_LEFT);
+            messageBox.getChildren().add(row);
+        });
+    }
+
     private void handleSendMessage() {
         String text = inputField.getText();
         if (!text.isEmpty()) {
-            chatArea.appendText("[You] " + text + "\n");
+            addSentMessage("[You] " + text);
             serverBackend.broadcastFromHost("[Host]: " + text);
             inputField.clear();
         }
@@ -74,23 +109,22 @@ public class serverGUI extends Application {
     private void handleSendFile() {
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(mainStage);
-        
+
         if (file != null) {
             try {
                 byte[] bytes = Files.readAllBytes(file.toPath());
-                chatArea.appendText("[You] Sent File: " + file.getName() + "\n");
+                addSentMessage("[You] Sent File: " + file.getName());
                 serverBackend.broadcastFileFromHost(file.getName(), bytes);
             } catch (IOException e) {
-                chatArea.appendText("System: Error reading file from local storage.\n");
+                addReceivedMessage("System: Error reading file from local storage.");
             }
         }
     }
 
     public void handleIncomingMessage(String clientName, Message msg) {
         if (msg.isFile) {
-            chatArea.appendText(clientName + " sent a file: " + msg.fileName + "\n");
-            
-            // Save file prompt
+            addReceivedMessage(clientName + " sent a file: " + msg.fileName);
+
             Platform.runLater(() -> {
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.setInitialFileName(msg.fileName);
@@ -99,19 +133,19 @@ public class serverGUI extends Application {
                 if (saveLocation != null) {
                     try (FileOutputStream fos = new FileOutputStream(saveLocation)) {
                         fos.write(msg.fileBytes);
-                        chatArea.appendText("System: File saved successfully to " + saveLocation.getName() + "\n");
+                        addReceivedMessage("System: File saved successfully to " + saveLocation.getName());
                     } catch (IOException e) {
-                        chatArea.appendText("System: Error saving file from " + clientName + "\n");
+                        addReceivedMessage("System: Error saving file from " + clientName);
                     }
                 }
             });
         } else {
-            chatArea.appendText(clientName + ": " + msg.text + "\n");
+            addReceivedMessage(clientName + ": " + msg.text);
         }
     }
 
     public void appendSystemMessage(String msg) {
-        chatArea.appendText("System: " + msg + "\n");
+        addReceivedMessage("System: " + msg);
     }
 
     public static void main(String[] args) {
