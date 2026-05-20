@@ -1,3 +1,5 @@
+package HomeWork.PokerGame;
+
 public class Card { // single player card
     private int id; // from 0 to 51
 
