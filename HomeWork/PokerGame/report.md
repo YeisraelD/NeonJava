@@ -21,7 +21,7 @@ graph TD
 ## Technical Details
 
 ### 1. Card Mapping System (`Card.java`)
-A single card is represented by an integer ID from `0` to `51`. Using simple modulo arithmetic, we extract the rank and suit without needing complex objects or enums:
+A single card is represented by an integer ID from `0` to `51`. Using simple modulo arithmetic, I extract the rank and suit without needing complex objects or enums:
 - **Rank**: `id % 13` (ranges from 0 to 12, mapping to `2` through `Ace`)
 - **Suit**: `id / 13` (ranges from 0 to 3, mapping to `Spades`, `Hearts`, `Diamonds`, and `Clubs`)
 
@@ -51,9 +51,8 @@ The player with the higher evaluated score wins the round.
 
 ## Graphical User Interface (`pokerGUI.java`)
 
-To complement the console version, we implemented a custom JavaFX desktop interface featuring:
-- **Green Felt felt background** matching standard real-world casino tables.
+To complement the console version, I implemented a custom JavaFX desktop interface featuring:
+- **Green felt background** matching standard real-world casino tables.
 - **Dynamic CSS Cards**: Cards are rendered dynamically as white rectangular panels with rounded corners, top-left rank values, and central unicode suit icons (`♠`, `♥`, `♦`, `♣`) colored dynamically (black/red).
 - **Face-Down Machine Cards**: Opponent cards are shown with geometric red card-backs until the showdown is initialized.
 - **State-driven controls**: Buttons to Call/Fold and Deal are synchronized with the game loop to prevent out-of-order execution.
-

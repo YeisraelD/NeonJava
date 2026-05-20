@@ -1,6 +1,6 @@
 # Multithreaded ChatApp: Sockets & Database Persistence Report
 
-This directory implements a desktop-based multi-user chat and file-sharing application using standard Java TCP sockets and multithreading, backed by a persistent MySQL relational database.
+This is the breakdown of my desktop-based multi-user chat and file-sharing application using standard Java TCP sockets and multithreading, backed by a persistent MySQL relational database.
 
 ## System Architecture
 
@@ -38,7 +38,7 @@ while (isRunning) {
 This ensures that the server can handle an arbitrary number of concurrent chat clients simultaneously.
 
 ### 2. Client-Side Background Reader Thread
-We replaced the JavaFX `Timeline` polling loop with a dedicated background thread on the client side. The thread loops on the socket's `DataInputStream` and waits for incoming packets:
+I replaced the JavaFX `Timeline` polling loop with a dedicated background thread on the client side. The thread loops on the socket's `DataInputStream` and waits for incoming packets:
 
 ```java
 private void readLoop() {
