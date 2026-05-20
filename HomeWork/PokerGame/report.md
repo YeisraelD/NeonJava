@@ -1,21 +1,15 @@
-# Poker Game: Command-Line Heads-Up Showdown
+A simple, console-based 2-card poker duel between a human player and a Machine opponent.
 
-A simple, console-based 2-card poker duel between a human player and a Machine opponent, written in pure Java.
-
-## How It Works (The TL;DR)
-
-Instead of bloated 7-card Texas Hold'em logic, this implementation gets straight to the point: a fast-paced 2-card showdown.
+Instead of bloated 7-card Texas Hold'em logic, this implementation gets straight to the point: a fast-paced 2 card showdown.
 
 ---
 
-## Technical Details
-
-### 1. Card Mapping System (`Card.java`)
+### 1. Card Mapping System ([Card.java](file:///c:/Users/yeisr/OneDrive/Desktop/New%20folder%20(4)/NeonJava/HomeWork/PokerGame/Card.java))
 A single card is represented by an integer ID from `0` to `51`. Using simple modulo arithmetic, I extract the rank and suit without needing complex objects or enums:
 - **Rank**: `id % 13` (ranges from 0 to 12, mapping to `2` through `Ace`)
 - **Suit**: `id / 13` (ranges from 0 to 3, mapping to `Spades`, `Hearts`, `Diamonds`, and `Clubs`)
 
-### 2. Shuffling & Generation (`PokerLogic.java`)
+### 2. Shuffling & Generation ([PokerLogic.java](file:///c:/Users/yeisr/OneDrive/Desktop/New%20folder%20(4)/NeonJava/HomeWork/PokerGame/PokerLogic.java))
 The deck is initialized sequentially and shuffled in place using Java's built-in `Collections.shuffle()`, yielding a cryptographically random distribution:
 
 ```java
@@ -39,7 +33,7 @@ The player with the higher evaluated score wins the round.
 
 ---
 
-## Graphical User Interface (`pokerGUI.java`)
+## Graphical User Interface ([pokerGUI.java](file:///c:/Users/yeisr/OneDrive/Desktop/New%20folder%20(4)/NeonJava/HomeWork/PokerGame/pokerGUI.java))
 
 To complement the console version, I implemented a custom JavaFX desktop interface featuring:
 - **Green felt background** matching standard real-world casino tables.

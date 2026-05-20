@@ -1,6 +1,4 @@
-# Multithreaded ChatApp: Sockets & Database Persistence Report
-
-This is the breakdown of my desktop-based multi-user chat and file-sharing application using standard Java TCP sockets and multithreading, backed by a persistent MySQL relational database.
+desktop-based multi-user chat and file-sharing application using standard Java TCP sockets and multithreading, backed by a persistent MySQL relational database.
 
 ## System Architecture
 

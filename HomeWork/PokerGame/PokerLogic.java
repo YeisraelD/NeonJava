@@ -1,6 +1,4 @@
 
-package HomeWork.PokerGame;
-
 import java.util.*;
 
 public class PokerLogic {

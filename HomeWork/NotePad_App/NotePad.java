@@ -1,9 +1,8 @@
- package HomeWork.NotePad_App;
-import java.io.*;
-import javafx.stage.FileChooser; //took too long to figure this out 
-import javafx.stage.Stage;
+package HomeWork.NotePad_App.model;
 
-import javax.swing.plaf.FileChooserUI;
+import java.io.*;
+import javafx.stage.Stage;
+import javafx.stage.FileChooser;
 
 public class NotePad { // here handle all back logic what i think the app do
     public static class FileData {// the helper class just to handle 2 string at the same time , name and content

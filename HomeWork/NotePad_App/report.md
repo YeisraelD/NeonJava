@@ -1,18 +1,3 @@
-# Notepad - JavaFX Text Editor Report
-
-This is the breakdown of my Notepad application. No bloated libraries or unnecessary overhead—just clean JavaFX paired with native Java File I/O, wrapped in a multi-tabbed UI.
-
-Here is how I structured the architecture and code to get the job done.
-
----
-
-## The Architecture
-
-The project is split into a clean Model-View pattern:
-1. **NotePad.java (The Engine):** Handles raw system File I/O operations (BufferedReader/BufferedWriter) and encapsulates file metadata into a custom FileData carrier class.
-2. **NotePadGUI.java (The Control Deck):** Builds the JavaFX stage, handles layout (BorderPane, TabPane), listens to user caret movements, and translates them to status updates.
-
----
 
 ## Core Features Implemented
 
@@ -67,4 +52,4 @@ public void handleNormalSaving(Stage stage) {
 ---
 
 ## Verdict
-The app compiles cleanly, handles multiple open documents without crossing streams, and supports fast keyboard-based navigation.
+The app compiles cleanly, handles multiple open documents without crossing streams, and supports fast keyboard based navigation.

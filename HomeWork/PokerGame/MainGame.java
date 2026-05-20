@@ -1,5 +1,7 @@
 
-package HomeWork.PokerGame;
+
+import HomeWork.PokerGame.model.Card;
+import HomeWork.PokerGame.model.PokerLogic;
 
 import java.util.*;
 

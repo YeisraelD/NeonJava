@@ -1,4 +1,5 @@
-package HomeWork.NotePad_App;
+
+import HomeWork.NotePad_App.model.NotePad;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -32,6 +33,7 @@ public class NotePadGUI extends Application {
         MenuBar menuBar = new MenuBar();
         Menu file = new Menu("File");
 
+        //file menus
         MenuItem new_ = new MenuItem("New File");
         new_.setAccelerator(KeyCombination.keyCombination("Ctrl+N"));
         new_.setOnAction(e -> createNewTab("Untitled", ""));
@@ -52,7 +54,39 @@ public class NotePadGUI extends Application {
         exit.setOnAction(e -> Platform.exit());
 
         file.getItems().addAll(new_, open, save, saveAs, new SeparatorMenuItem(), exit);
-        menuBar.getMenus().add(file);
+
+        // edit menus
+        Menu edit = new Menu("Edit");
+
+        MenuItem undo = new MenuItem("Undo");
+        undo.setAccelerator(KeyCombination.keyCombination("Ctrl+Z"));
+        undo.setOnAction(e -> { TextArea ta = getCurrentTextArea(); if (ta != null) ta.undo(); });
+
+        MenuItem redo = new MenuItem("Redo");
+        redo.setAccelerator(KeyCombination.keyCombination("Ctrl+Y"));
+        redo.setOnAction(e -> { TextArea ta = getCurrentTextArea(); if (ta != null) ta.redo(); });
+
+        MenuItem cut = new MenuItem("Cut");
+        cut.setAccelerator(KeyCombination.keyCombination("Ctrl+X"));
+        cut.setOnAction(e -> { TextArea ta = getCurrentTextArea(); if (ta != null) ta.cut(); });
+
+        MenuItem copy = new MenuItem("Copy");
+        copy.setAccelerator(KeyCombination.keyCombination("Ctrl+C"));
+        copy.setOnAction(e -> { TextArea ta = getCurrentTextArea(); if (ta != null) ta.copy(); });
+
+        MenuItem paste = new MenuItem("Paste");
+        paste.setAccelerator(KeyCombination.keyCombination("Ctrl+V"));
+        paste.setOnAction(e -> { TextArea ta = getCurrentTextArea(); if (ta != null) ta.paste(); });
+
+        MenuItem selectAll = new MenuItem("Select All");
+        selectAll.setAccelerator(KeyCombination.keyCombination("Ctrl+A"));
+        selectAll.setOnAction(e -> { TextArea ta = getCurrentTextArea(); if (ta != null) ta.selectAll(); });
+
+        edit.getItems().addAll(undo, redo, new SeparatorMenuItem(),
+                cut, copy, paste, new SeparatorMenuItem(),
+                selectAll);
+
+        menuBar.getMenus().addAll(file, edit);
         root.setTop(menuBar);
 
         HBox statusBar = createStatusBar();
@@ -189,6 +223,8 @@ public class NotePadGUI extends Application {
         Alert error_alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
         error_alert.showAndWait();
     }
+
+
 
     public static void main(String[] args) {
         launch(args);
